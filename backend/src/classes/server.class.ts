@@ -1,4 +1,6 @@
 import express, { Application } from "express";
+import cargoRouter from "../routes/cargo.route";
+import bodyParser from "body-parser";
 
 export class Server {
     private server: Application;
@@ -7,13 +9,20 @@ export class Server {
     constructor() {
         this.server = express();
         this.port = parseInt(process.env.PORT as string) || 3000;
+        this.settings();
         this.rotas();
         this.listen();
     }
 
-    rotas() { }
+    settings() {
+        this.server.use(bodyParser.json());
+    }
+
+    rotas() {
+        this.server.use("/cargos", cargoRouter);
+    }
 
     listen() {
-        this.server.listen(this.port, () => `Aplicação funcionando na porta ${this.port}`);
+        this.server.listen(this.port, () => console.log(`Aplicação funcionando na porta ${this.port}...`));
     }
 }
