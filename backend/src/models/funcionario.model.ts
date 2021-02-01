@@ -1,7 +1,7 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../util/connection";
 
-export const Funcionario = sequelize.define("Funcionario", {
+export const FuncionarioModel = sequelize.define("Funcionario", {
     nome: DataTypes.STRING,
     sobrenome: DataTypes.STRING,
     dataNascimento: DataTypes.DATE,

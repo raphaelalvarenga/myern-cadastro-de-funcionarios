@@ -1,6 +1,6 @@
-import { Funcionario } from "../models/funcionario.model";
-import { Cargo } from "../models/cargo.model";
+import { FuncionarioModel } from "../models/funcionario.model";
+import { CargoModel } from "../models/cargo.model";
 
 export const associacao = () => {
-    Cargo.hasOne(Funcionario);
+    CargoModel.hasOne(FuncionarioModel);
 };
