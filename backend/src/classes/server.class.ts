@@ -1,6 +1,7 @@
 import express, { Application } from "express";
 import cargoRouter from "../routes/cargo.route";
 import bodyParser from "body-parser";
+import funcionarioRouter from "../routes/funcionario.route";
 
 export class Server {
     private server: Application;
@@ -20,6 +21,7 @@ export class Server {
 
     rotas() {
         this.server.use("/cargos", cargoRouter);
+        this.server.use("/funcionarios", funcionarioRouter);
     }
 
     listen() {
