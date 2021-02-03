@@ -1,9 +1,11 @@
 import React from "react";
 import MenuSuperior from "./global-components/MenuSuperior";
 import MenuLateral from "./global-components/MenuLateral";
-import Home from "./pages/Funcionarios";
+import Funcionarios from "./pages/Funcionarios";
 import Cargos from "./pages/Cargos";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
+import Funcionario from "./pages/Funcionario";
+import CadastrarFuncionario from "./pages/CadastrarFuncionario";
 
 const styles = {
     conteudo: {
@@ -29,8 +31,21 @@ const App = () => {
             <MenuLateral isSidebarOpen = {isSidebarOpen} closeSidebar = {closeSidebar} />
             <div style = {styles.conteudo}>
                 <Switch>
-                    <Route path = "/cargos" component = {Cargos} />
-                    <Route path = "/" component = {Home} />
+                    <Route path = "/funcionario/:id">
+                        <Funcionario />
+                    </Route>
+
+                    <Route path = "/cadastrar-funcionario">
+                        <CadastrarFuncionario />
+                    </Route>
+
+                    <Route path = "/cargos">
+                        <Cargos />
+                    </Route>
+
+                    <Route path = "/">
+                        <Funcionarios />
+                    </Route>
                 </Switch>
             </div>
         </BrowserRouter>

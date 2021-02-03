@@ -1,17 +1,24 @@
 import React from "react";
-import { Button, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@material-ui/core";
+import { Button, Grid, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import { Funcionario } from "../classes/funcionario.class";
 import { ResponseInterface } from "../interfaces/response.interface";
-import { Refresh } from "@material-ui/icons";
+import { Add, Refresh } from "@material-ui/icons";
 import { Service } from "../classes/services.class";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({
     divAcoes: {
         display: "flex",
         justifyContent: "space-evenly"
+    },
+
+    link: {
+        textDecoration: "none"
     }
-})
+});
+
+const service = new Service();
 
 const Funcionarios: React.FunctionComponent = () => {
     const classes = useStyles();
@@ -26,8 +33,6 @@ const Funcionarios: React.FunctionComponent = () => {
 
         setFuncionarios([]);
         
-        const service = new Service();
-
         service
             .getFuncionarios()
             .then(response => {
@@ -37,11 +42,35 @@ const Funcionarios: React.FunctionComponent = () => {
             .catch(error => console.log(error));
     }
 
+    const deleteFuncionario = (id: number) => {
+        service
+            .deleteFuncionario(id)
+            .then(response => {
+                const tempFuncionarios = funcionarios.filter(funcionario => funcionario.id !== id);
+
+                setFuncionarios(tempFuncionarios);
+            })
+    }
+
     return (
         <>
-            <IconButton onClick = {getFuncionarios}>
-                <Refresh />
-            </IconButton>
+            <Grid container justify = "space-between">
+                <Grid item>
+                    <Link to = "/cadastrar-funcionario" className = {classes.link}>
+                        <Button
+                            variant = "outlined"
+                            color = "primary"
+                            startIcon = {<Add />}
+                        >Adicionar</Button>
+                    </Link>
+                </Grid>
+
+                <Grid item>
+                    <IconButton onClick = {getFuncionarios} color = "secondary">
+                        <Refresh />
+                    </IconButton>
+                </Grid>
+            </Grid>
             {
                 funcionarios.length > 0 ? (
                     <TableContainer component = {Paper}>
@@ -70,8 +99,17 @@ const Funcionarios: React.FunctionComponent = () => {
                                                     <TableCell align = "center">R$ { funcionario.salario }</TableCell>
                                                     <TableCell align = "center">
                                                         <div className = {classes.divAcoes}>
-                                                            <div><Button variant = "outlined">Editar</Button></div>
-                                                            <div><Button color = "secondary">Excluir</Button></div>
+                                                            <div>
+                                                                <Link to = {`/funcionario/${funcionario.id}`} className = {classes.link}>
+                                                                    <Button variant = "outlined">Editar</Button>
+                                                                </Link>
+                                                            </div>
+                                                            <div>
+                                                                <Button
+                                                                    color = "secondary"
+                                                                    onClick = {() => deleteFuncionario(funcionario.id as number)}
+                                                                >Excluir</Button>
+                                                            </div>
                                                         </div>
                                                     </TableCell>
                                                 </TableRow>
