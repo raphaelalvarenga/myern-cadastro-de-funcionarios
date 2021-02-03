@@ -3,6 +3,7 @@ import cargoRouter from "../routes/cargo.route";
 import bodyParser from "body-parser";
 import funcionarioRouter from "../routes/funcionario.route";
 import cors from "cors";
+import { associacao } from "../models/associations";
 
 export class Server {
     private server: Application;
@@ -12,6 +13,7 @@ export class Server {
         this.server = express();
         this.port = parseInt(process.env.PORT as string) || 3000;
         this.settings();
+        associacao();
         this.rotas();
         this.listen();
     }

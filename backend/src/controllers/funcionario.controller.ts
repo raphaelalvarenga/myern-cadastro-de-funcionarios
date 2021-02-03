@@ -54,7 +54,7 @@ export function postFuncionario(req: Request, res: Response) {
             sobrenome: params.sobrenome,
             dataNascimento: date,
             salario: params.salario,
-            cargo: params.cargo
+            CargoId: params.cargoId
         })
         .then(result => {
             status = 201;
@@ -83,7 +83,7 @@ export function putFuncionario(req: Request, res: Response) {
             sobrenome: params.sobrenome,
             dataNascimento: date,
             salario: params.salario,
-            cargo: params.cargo
+            CargoId: params.cargoId
         }, {
             where: { id }
         })
