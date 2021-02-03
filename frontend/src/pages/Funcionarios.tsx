@@ -71,6 +71,7 @@ const Funcionarios: React.FunctionComponent = () => {
                                     <TableCell align = "center">Nome</TableCell>
                                     <TableCell align = "center">Sobrenome</TableCell>
                                     <TableCell align = "center">Data de Nascimento</TableCell>
+                                    <TableCell align = "center">Cargo</TableCell>
                                     <TableCell align = "center">Salário</TableCell>
                                     <TableCell align = "center">Ações</TableCell>
                                 </TableRow>
@@ -86,6 +87,7 @@ const Funcionarios: React.FunctionComponent = () => {
                                                     <TableCell align = "center">{ funcionario.nome }</TableCell>
                                                     <TableCell align = "center">{ funcionario.sobrenome }</TableCell>
                                                     <TableCell align = "center">{ new Date(funcionario.dataNascimento).toLocaleDateString() }</TableCell>
+                                                    <TableCell align = "center">{ funcionario.cargo }</TableCell>
                                                     <TableCell align = "center">R$ { funcionario.salario }</TableCell>
                                                     <TableCell align = "center">
                                                         <div className = {classes.divAcoes}>

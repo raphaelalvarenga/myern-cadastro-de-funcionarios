@@ -3,16 +3,37 @@ import { ResponseInterface } from "../interfaces/response.interface";
 import { RequestInterface } from "../interfaces/request.interface";
 import { FuncionarioModel } from "../models/funcionario.model";
 import { Funcionario } from "../classes/funcionario.class";
+import { sequelize } from "../util/connection";
 
 let status: number;
 let response: ResponseInterface;
 
 export function getFuncionarios(req: Request, res: Response) {
-    FuncionarioModel
-        .findAll()
+    // FuncionarioModel
+    //     .findAll()
+
+    const sql = `
+        SELECT
+            f.id,
+            f.nome,
+            f.sobrenome,
+            f.dataNascimento,
+            f.salario,
+            c.descricao as cargo,
+            f.createdAt,
+            f.updatedAt
+        FROM funcionarios f
+        INNER JOIN cargos c
+        ON f.CargoId = c.id
+        ORDER BY f.id
+    `;
+
+    sequelize
+        .query(sql)
         .then(result => {
             status = 200;
-            response = { success: true, message: "", params: { funcionarios: result }}
+            console.log("teste")
+            response = { success: true, message: "", params: { funcionarios: result[0] }}
         })
         .catch(error => {
             status = 500;

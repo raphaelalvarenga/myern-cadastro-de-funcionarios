@@ -4,6 +4,7 @@ export class Funcionario {
     private _sobrenome: string;
     private _dataNascimento: Date;
     private _salario: number;
+    private _cargo: string;
     private _createdAt: Date | null;
     private _updatedAt: Date | null;
 
@@ -13,6 +14,7 @@ export class Funcionario {
         sobrenome: string, 
         dataNascimento: Date, 
         salario: number, 
+        cargo: string,
         createdAt: Date | null, 
         updatedAt: Date | null
     ) {
@@ -21,6 +23,7 @@ export class Funcionario {
         this._sobrenome = sobrenome;
         this._dataNascimento = dataNascimento;
         this._salario = salario;
+        this._cargo = cargo;
         this._createdAt = createdAt;
         this._updatedAt = updatedAt
     }
@@ -63,6 +66,14 @@ export class Funcionario {
 
     set salario(salario: number) {
         this._salario = salario;
+    }
+
+    get cargo() {
+        return this._cargo;
+    }
+
+    set cargo(cargo: string) {
+        this._cargo = cargo;
     }
 
     get createdAt() {
