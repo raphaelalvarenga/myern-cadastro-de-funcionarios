@@ -2,6 +2,8 @@ import React from "react";
 import MenuSuperior from "./global-components/MenuSuperior";
 import MenuLateral from "./global-components/MenuLateral";
 import Home from "./pages/Home";
+import Cargos from "./pages/Cargos";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 const styles = {
     conteudo: {
@@ -22,13 +24,16 @@ const App = () => {
     }
     
     return (
-        <div>
+        <BrowserRouter>
             <MenuSuperior openSidebar = {openSidebar} />
             <MenuLateral isSidebarOpen = {isSidebarOpen} closeSidebar = {closeSidebar} />
             <div style = {styles.conteudo}>
-                <Home />
+                <Switch>
+                    <Route path = "/cargos" component = {Cargos} />
+                    <Route path = "/" component = {Home} />
+                </Switch>
             </div>
-        </div>
+        </BrowserRouter>
     );
 }
 

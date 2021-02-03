@@ -1,6 +1,7 @@
 import React from "react";
 import { Drawer, List, ListItem, ListItemIcon, ListItemText, makeStyles } from "@material-ui/core";
-import { AcUnit } from "@material-ui/icons";
+import { People, Work } from "@material-ui/icons";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({
     divList: {
@@ -16,19 +17,14 @@ const MenuLateral = (props: { isSidebarOpen: boolean, closeSidebar: () => void }
         <Drawer anchor = "left" open = {props.isSidebarOpen} onClose = {props.closeSidebar}>
             <div className = {classes.divList}>
                 <List>
-                    <ListItem button>
-                        <ListItemIcon><AcUnit /></ListItemIcon>
-                        <ListItemText primary = "Item 1" />
+                    <ListItem button component = {Link} to = "/" onClick = {props.closeSidebar}>
+                        <ListItemIcon><People /></ListItemIcon>
+                        <ListItemText primary = "Funcionarios" />
                     </ListItem>
 
-                    <ListItem button>
-                        <ListItemIcon><AcUnit /></ListItemIcon>
-                        <ListItemText primary = "Item 2" />
-                    </ListItem>
-
-                    <ListItem button>
-                        <ListItemIcon><AcUnit /></ListItemIcon>
-                        <ListItemText primary = "Item 3" />
+                    <ListItem button component = {Link} to = "/cargos" onClick = {props.closeSidebar}>
+                        <ListItemIcon><Work /></ListItemIcon>
+                        <ListItemText primary = "Cargos" />
                     </ListItem>
                 </List>
             </div>
