@@ -9,4 +9,12 @@ export class Service {
     deleteFuncionario(id: number) {
         return axios.delete(`${util.api}/funcionarios/${id}`);
     }
+
+    getCargos() {
+        return axios.get(`${util.api}/cargos`);
+    }
+
+    deleteCargo(id: number) {
+        return axios.delete(`${util.api}/cargos/${id}`);
+    }
 }

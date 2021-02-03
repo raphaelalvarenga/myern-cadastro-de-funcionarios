@@ -6,22 +6,12 @@ import { ResponseInterface } from "../interfaces/response.interface";
 import { Add, Refresh } from "@material-ui/icons";
 import { Service } from "../classes/services.class";
 import { Link } from "react-router-dom";
-
-const useStyles = makeStyles({
-    divAcoes: {
-        display: "flex",
-        justifyContent: "space-evenly"
-    },
-
-    link: {
-        textDecoration: "none"
-    }
-});
+import styles from "../styles";
 
 const service = new Service();
 
 const Funcionarios: React.FunctionComponent = () => {
-    const classes = useStyles();
+    const classes = styles();
 
     const [funcionarios, setFuncionarios] = React.useState<Funcionario[]>([]);
 
@@ -56,7 +46,7 @@ const Funcionarios: React.FunctionComponent = () => {
         <>
             <Grid container justify = "space-between">
                 <Grid item>
-                    <Link to = "/cadastrar-funcionario" className = {classes.link}>
+                    <Link to = "/cadastrar-funcionario" className = {classes.buttonLink}>
                         <Button
                             variant = "outlined"
                             color = "primary"
@@ -100,7 +90,7 @@ const Funcionarios: React.FunctionComponent = () => {
                                                     <TableCell align = "center">
                                                         <div className = {classes.divAcoes}>
                                                             <div>
-                                                                <Link to = {`/funcionario/${funcionario.id}`} className = {classes.link}>
+                                                                <Link to = {`/funcionario/${funcionario.id}`} className = {classes.buttonLink}>
                                                                     <Button variant = "outlined">Editar</Button>
                                                                 </Link>
                                                             </div>
