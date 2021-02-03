@@ -1,6 +1,7 @@
 import React from "react";
 import MenuSuperior from "./global-components/MenuSuperior";
 import MenuLateral from "./global-components/MenuLateral";
+import Home from "./pages/Home";
 
 const styles = {
     conteudo: {
@@ -24,7 +25,9 @@ const App = () => {
         <div>
             <MenuSuperior openSidebar = {openSidebar} />
             <MenuLateral isSidebarOpen = {isSidebarOpen} closeSidebar = {closeSidebar} />
-            <div style = {styles.conteudo}>Conteúdo</div>
+            <div style = {styles.conteudo}>
+                <Home />
+            </div>
         </div>
     );
 }
