@@ -2,9 +2,9 @@ import React from "react";
 import { Button, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import { Funcionario } from "../classes/funcionario.class";
-import axios from "axios";
 import { ResponseInterface } from "../interfaces/response.interface";
 import { Refresh } from "@material-ui/icons";
+import { Service } from "../classes/services.class";
 
 const useStyles = makeStyles({
     divAcoes: {
@@ -26,8 +26,10 @@ const Home: React.FunctionComponent = () => {
 
         setFuncionarios([]);
         
-        axios
-            .get("http://localhost:3000/funcionarios")
+        const service = new Service();
+
+        service
+            .getFuncionarios()
             .then(response => {
                 const funcionarios = (response.data as ResponseInterface).params.funcionarios as Array<Funcionario>;
                 setFuncionarios(funcionarios);
