@@ -13,7 +13,7 @@ const useStyles = makeStyles({
     }
 })
 
-const Home: React.FunctionComponent = () => {
+const Funcionarios: React.FunctionComponent = () => {
     const classes = useStyles();
 
     const [funcionarios, setFuncionarios] = React.useState<Funcionario[]>([]);
@@ -88,4 +88,4 @@ const Home: React.FunctionComponent = () => {
     )
 }
 
-export default Home;
+export default Funcionarios;

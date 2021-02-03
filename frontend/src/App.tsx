@@ -1,7 +1,7 @@
 import React from "react";
 import MenuSuperior from "./global-components/MenuSuperior";
 import MenuLateral from "./global-components/MenuLateral";
-import Home from "./pages/Home";
+import Home from "./pages/Funcionarios";
 import Cargos from "./pages/Cargos";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
