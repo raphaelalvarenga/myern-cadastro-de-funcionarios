@@ -17,7 +17,7 @@ const CadastrarCargo = (props: Props) => {
 
     const classes = styles();
     
-    const [cargo, setCargo] = React.useState<Cargo>({id: null, descricao: "", createdAt: null, updatedAt: null});
+    const [cargo, setCargo] = React.useState<Cargo>({id: 0, descricao: "", createdAt: null, updatedAt: null});
     const [cadastrosRecentes, setCadastrosRecentes] = React.useState<string[]>([]);
     const [snackbarProps, setSnackbarProps] = React.useState<SnackbarProps>({open: false, message: ""});
     const [acao] = React.useState(props.match.params.id ? "editar" : "cadastrar");

@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Grid, Paper, SnackbarProps, TextField } from "@material-ui/core";
+import { Button, Divider, Grid, List, ListItem, ListItemText, MenuItem, Paper, Select, SnackbarProps, TextField, Typography } from "@material-ui/core";
 import Titulo from "../global-components/Titulo";
 import MatchParams from "../interfaces/match-params.interface";
 import { RouteComponentProps } from "react-router-dom";
@@ -8,6 +8,7 @@ import { Service } from "../classes/services.class";
 import Funcionario from "../interfaces/funcionario.interface";
 import Feedback from "../global-components/Feedback";
 import { ResponseInterface } from "../interfaces/response.interface";
+import Cargo from "../interfaces/cargo.interface";
 
 interface Props extends RouteComponentProps<MatchParams> {}
 
@@ -30,12 +31,27 @@ const CadastrarFuncionario = (props: Props) => {
     const [snackbarProps, setSnackbarProps] = React.useState<SnackbarProps>({open: false, message: ""});
     const [cadastrosRecentes, setCadastrosRecentes] = React.useState<string[]>([]);
     const [acao] = React.useState(props.match.params.id ? "editar" : "cadastrar");
+    const [cargos, setCargos] = React.useState<Cargo[]>([]);
 
     React.useEffect(() => {
         if (acao === "editar") {
             getFuncionario();
         }
+
+        getCargos();
     }, []);
+
+    const getCargos = () => {
+        service
+            .getCargos()
+            .then(response => {
+                const tempCargos = (response.data as ResponseInterface).params.cargos;
+                setCargos(tempCargos);
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
 
     const getFuncionario = () => {
         const id = parseInt(props.match.params.id);
@@ -50,26 +66,25 @@ const CadastrarFuncionario = (props: Props) => {
     }
 
     const adicionarFuncionario = () => {
-        console.log(funcionario);
-        // if (false) {
-        //     setSnackbarProps({open: true, message: "Preencha o campo!"});
-        // } else {
-        //     service
-        //         .postFuncionario(funcionario)
-        //         .then(response => {
-        //             const { success, message } = (response.data as ResponseInterface);
-        //             setSnackbarProps({open: true, message})
+        if (false) {
+            setSnackbarProps({open: true, message: "Preencha o campo!"});
+        } else {
+            service
+                .postFuncionario(funcionario)
+                .then(response => {
+                    const { success, message } = (response.data as ResponseInterface);
+                    setSnackbarProps({open: true, message})
 
-        //             if (success) {
-        //                 const { nome, sobrenome } = funcionario;
-        //                 setCadastrosRecentes([...cadastrosRecentes, `${nome} ${sobrenome}`]);
-        //                 // setFuncionario()
-        //             }
-        //         })
-        //         .catch(error => {
-        //             setSnackbarProps({open: true, message: "Ocorreu um erro. Tente novamente..."});
-        //         });
-        // }
+                    if (success) {
+                        const { nome, sobrenome } = funcionario;
+                        setCadastrosRecentes([...cadastrosRecentes, `${nome} ${sobrenome}`]);
+                        setFuncionario({...funcionario, nome: "", sobrenome: "", dataNascimento: "", cargoId: 0, salario: 0})
+                    }
+                })
+                .catch(error => {
+                    setSnackbarProps({open: true, message: "Ocorreu um erro. Tente novamente..."});
+                });
+        }
     }
 
     const editarFuncionario = () => {
@@ -128,13 +143,15 @@ const CadastrarFuncionario = (props: Props) => {
                     </Grid>
 
                     <Grid item sm = {12} md = {6} lg = {4}>
-                        <TextField
-                            required
-                            label = "Cargo"
+                        <Select
                             value = {funcionario.cargoId === 0 ? "" : funcionario.cargoId}
-                            onChange = {(e) => setFuncionario({...funcionario, cargoId: 1})}
+                            onChange = {(e) => setFuncionario({...funcionario, cargoId: parseInt(e.target.value as string)})}
                             className = {classes.inputText}
-                        />
+                        >
+                            {
+                                cargos.map((cargo, index) => <MenuItem key = {index} value = {cargo.id}>{cargo.descricao}</MenuItem>)
+                            }
+                        </Select>
                     </Grid>
 
                     <Grid item sm = {12} md = {6} lg = {4}>
@@ -167,6 +184,26 @@ const CadastrarFuncionario = (props: Props) => {
                     </Grid>
                 </Grid>
             </Paper>
+
+            {
+                    cadastrosRecentes.length > 0
+                    &&
+                    (
+                        <Paper className = {classes.paper}>
+                            <Typography variant = "h5">Recentemente adicionados</Typography>
+                            <Divider />
+                            <List>
+                                {
+                                    cadastrosRecentes.map((cadastro, index) => (
+                                        <ListItem key = {index}>
+                                            <ListItemText primary = { cadastro } />
+                                        </ListItem>
+                                    ))
+                                }
+                            </List>
+                        </Paper>
+                    )
+                }
         </>
     )
 }

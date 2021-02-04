@@ -20,7 +20,17 @@ export class Service {
     }
 
     postFuncionario(newFuncionario: Funcionario) {
-        return axios.post(`${util.api}/funcionarios`, newFuncionario)
+        request = {
+            ...request,
+            params: {
+                nome: newFuncionario.nome,
+                sobrenome: newFuncionario.sobrenome,
+                dataNascimento: newFuncionario.dataNascimento,
+                salario: newFuncionario.salario,
+                cargoId: newFuncionario.cargoId
+            }
+        }
+        return axios.post(`${util.api}/funcionarios`, request)
     }
 
     putFuncionario(funcionario: Funcionario) {
