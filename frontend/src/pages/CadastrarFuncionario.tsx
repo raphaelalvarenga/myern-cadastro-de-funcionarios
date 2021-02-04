@@ -47,7 +47,6 @@ const CadastrarFuncionario = (props: Props) => {
             .getCargos()
             .then(response => {
                 const tempCargos = (response.data as ResponseInterface).params.cargos as Cargo[];
-                console.log(tempCargos);
 
                 tempCargos.length === 0 ? setSemCargo({...semCargo, mostrar: true}) : setSemCargo({naoPossui: false, mostrar: false});
 
