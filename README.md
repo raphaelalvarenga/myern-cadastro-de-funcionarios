@@ -10,6 +10,14 @@ Entre no diretório:
 
 > cd myern-cadastro-de-funcionarios
 
+Se você estiver no Linux ou Mac, digite:
+
+> ls
+
+Se você estiver no Windows, digite:
+
+> dir
+
 Você verá duas pastas: backend e frontend. Vamos baixar as dependências de cada uma. Entre em backend:
 
 > cd backend/
@@ -24,7 +32,9 @@ Coloque o backend para funcionar:
 
 > npm run dev
 
-Agora vamos baixar as dependências do frontend. Abra um novo terminal e aponte para a pasta frontend:
+**Abra um novo terminal e aponte para a pasta frontend:**
+
+Agora vamos baixar as dependências do frontend:
 
 > cd frontend/
 
@@ -36,4 +46,4 @@ Coloque o frontend para funcionar:
 
 > npm start
 
-Importante: o frontend vai perguntar se você deseja utilizar outra porta. Responda que sim apertando a tela Y.
+Importante: o frontend vai perguntar se você deseja utilizar outra porta. Responda que sim apertando a tecla Y.
