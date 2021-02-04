@@ -14,7 +14,6 @@ const Funcionarios: React.FunctionComponent = () => {
     const classes = styles();
 
     const [funcionarios, setFuncionarios] = React.useState<Funcionario[]>([]);
-    const [semCargo, setSemCargo] = React.useState<{possuiCargo: boolean, mostrar: boolean}>({possuiCargo: false, mostrar: false});
 
     React.useEffect(() => {
         getFuncionarios();

@@ -52,7 +52,6 @@ const CadastrarCargo = (props: Props) => {
                     setSnackbarProps({open: true, message})
 
                     if (success) {
-                        const { id, createdAt, updatedAt } = cargo;
                         setCadastrosRecentes([...cadastrosRecentes, cargo.descricao]);
                         setCargo({...cargo, descricao: ""});
                     }
@@ -70,7 +69,7 @@ const CadastrarCargo = (props: Props) => {
             service
                 .putCargo(cargo)
                 .then(response => {
-                    const { success, message } = (response.data as ResponseInterface);
+                    const { message } = (response.data as ResponseInterface);
                     setSnackbarProps({open: true, message})
                 })
                 .catch(error => {

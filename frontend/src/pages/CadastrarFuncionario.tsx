@@ -110,7 +110,7 @@ const CadastrarFuncionario = (props: Props) => {
             service
                 .putFuncionario(funcionario)
                 .then(response => {
-                    const { success, message } = (response.data as ResponseInterface);
+                    const { message } = (response.data as ResponseInterface);
                     setSnackbarProps({open: true, message})
                 })
                 .catch(error => {
