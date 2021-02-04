@@ -88,7 +88,7 @@ const Funcionarios: React.FunctionComponent = () => {
                                                     <TableCell align = "center">{ funcionario.nome }</TableCell>
                                                     <TableCell align = "center">{ funcionario.sobrenome }</TableCell>
                                                     <TableCell align = "center">{ new Date(funcionario.dataNascimento).toLocaleDateString() }</TableCell>
-                                                    <TableCell align = "center">{ funcionario.cargo }</TableCell>
+                                                    <TableCell align = "center">Teste</TableCell>
                                                     <TableCell align = "center">R$ { funcionario.salario }</TableCell>
                                                     <TableCell align = "center">
                                                         <div className = {classes.divAcoes}>

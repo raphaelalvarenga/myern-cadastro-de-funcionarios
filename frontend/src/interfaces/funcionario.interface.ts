@@ -2,9 +2,9 @@ export default interface Funcionario {
     id: number | null;
     nome: string;
     sobrenome: string;
-    dataNascimento: Date;
+    dataNascimento: string;
     salario: number;
-    cargo: string;
+    cargoId: number;
     createdAt: Date | null;
     updatedAt: Date | null;
 }

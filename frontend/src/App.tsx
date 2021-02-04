@@ -4,7 +4,6 @@ import MenuLateral from "./global-components/MenuLateral";
 import Funcionarios from "./pages/Funcionarios";
 import Cargos from "./pages/Cargos";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import Funcionario from "./pages/Funcionario";
 import CadastrarFuncionario from "./pages/CadastrarFuncionario";
 import CadastrarCargo from "./pages/CadastrarCargo";
 import styles from "./styles";
@@ -29,13 +28,9 @@ const App = () => {
             <MenuLateral isSidebarOpen = {isSidebarOpen} closeSidebar = {closeSidebar} />
             <div className = {classes.conteudo}>
                 <Switch>
-                    <Route path = "/funcionario/:id">
-                        <Funcionario />
-                    </Route>
+                    <Route path = "/funcionario/:id" component = {CadastrarFuncionario} />
 
-                    <Route path = "/cadastrar-funcionario">
-                        <CadastrarFuncionario />
-                    </Route>
+                    <Route path = "/cadastrar-funcionario" component = {CadastrarFuncionario} />
 
                     <Route path = "/cargos">
                         <Cargos />

@@ -5,12 +5,9 @@ import Feedback from "../global-components/Feedback";
 import { ResponseInterface } from "../interfaces/response.interface";
 import styles from "../styles";
 import Titulo from "../global-components/Titulo";
-import { RouteComponentProps } from "react-router-dom";
 import Cargo from "../interfaces/cargo.interface";
-
-interface MatchParams {
-    id: string;
-}
+import { RouteComponentProps } from "react-router-dom";
+import MatchParams from "../interfaces/match-params.interface";
 
 interface Props extends RouteComponentProps<MatchParams> {}
 

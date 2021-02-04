@@ -15,11 +15,17 @@ export class Service {
         return axios.get(`${util.api}/funcionarios`);
     }
 
-    getFuncionarioById(id: number) { }
+    getFuncionarioById(id: number) {
+        return axios.get(`${util.api}/funcionarios/${id}`)
+    }
 
-    postFuncionario(newFuncionario: Funcionario) { }
+    postFuncionario(newFuncionario: Funcionario) {
+        return axios.post(`${util.api}/funcionarios`, newFuncionario)
+    }
 
-    putFuncionario(funcionario: Funcionario) { }
+    putFuncionario(funcionario: Funcionario) {
+        return axios.put(`${util.api}/funcionarios/${funcionario.id}`, funcionario)
+    }
 
     deleteFuncionario(id: number) {
         return axios.delete(`${util.api}/funcionarios/${id}`);

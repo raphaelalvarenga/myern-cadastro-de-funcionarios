@@ -1,4 +1,4 @@
-import { Divider, Paper, Typography } from "@material-ui/core";
+import { Divider, Typography } from "@material-ui/core";
 import React from "react";
 import styles from "../styles";
 
