@@ -14,12 +14,15 @@ const Cargos = () => {
 
     const classes = styles();
 
+    // State
     const [cargos, setCargos] = React.useState<Cargo[]>([]);
 
+    // Buscar todos os cargos ao abrir a página
     React.useEffect(() => {
         getCargos();
     }, []);
 
+    // Buscar registros
     const getCargos = () => {
         setCargos([]);
 
@@ -32,6 +35,7 @@ const Cargos = () => {
             .catch(error => console.log(error));
     }
 
+    // Este método é disparado quando o usuário clica no botão excluir registro
     const deleteCargo = (id: number) => {
         service
             .deleteCargo(id)

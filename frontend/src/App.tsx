@@ -12,6 +12,7 @@ const App = () => {
 
     const classes = styles();
 
+    // Esta state controla o abre/fecha do menu lateral
     const [ isSidebarOpen, setIsSidebarOpen ] = React.useState(false);
 
     const openSidebar = () => {

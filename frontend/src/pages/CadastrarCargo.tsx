@@ -17,17 +17,21 @@ const CadastrarCargo = (props: Props) => {
 
     const classes = styles();
     
+    // States
     const [cargo, setCargo] = React.useState<Cargo>({id: 0, descricao: "", createdAt: null, updatedAt: null});
     const [cadastrosRecentes, setCadastrosRecentes] = React.useState<string[]>([]);
     const [snackbarProps, setSnackbarProps] = React.useState<SnackbarProps>({open: false, message: ""});
     const [acao] = React.useState(props.match.params.id ? "editar" : "cadastrar");
 
     React.useEffect(() => {
+
+        // Se esta página for a de editar, buscar o registro de acordo com o id da URL
         if (acao === "editar") {
             getCargo();
         }
     }, []);
     
+    // Buscar registro
     const getCargo = () => {
         const id = parseInt(props.match.params.id);
         service
@@ -41,10 +45,17 @@ const CadastrarCargo = (props: Props) => {
 
     }
 
+    // Adicionar registro
     const adicionarCargo = () => {
+
+        // Se o campo estiver vazio...
         if (cargo.descricao === "") {
+
+            // Informar ao usuário que ele precisa preencher o campo
             setSnackbarProps({open: true, message: "Preencha o campo!"});
         } else {
+
+            // ... senão, realizar o registro
             service
                 .postCargo(cargo)
                 .then(response => {
@@ -62,10 +73,17 @@ const CadastrarCargo = (props: Props) => {
         }
     }
 
+    // Editar registro
     const editarCargo = () => {
+
+        // Se o campo estiver vazio...
         if (cargo.descricao === "") {
+
+            // Informar ao usuário que ele precisa preencher o campo
             setSnackbarProps({open: true, message: "Preencha o campo!"});
         } else {
+
+            // ... senão, realizar o registro
             service
                 .putCargo(cargo)
                 .then(response => {

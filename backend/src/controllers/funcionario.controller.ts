@@ -6,9 +6,11 @@ import { Funcionario } from "../classes/funcionario.class";
 import { sequelize } from "../util/connection";
 import { Op } from "sequelize";
 
+// Estas variáveis servirão para retornar os dados ao front
 let status: number;
 let response: ResponseInterface;
 
+// Buscar todos os funcionários
 export function getFuncionarios(req: Request, res: Response) {
 
     const sql = `
@@ -43,6 +45,7 @@ export function getFuncionarios(req: Request, res: Response) {
         });
 }
 
+// Buscar funcionário por id
 export function getFuncionarioById(req: Request, res: Response) {
 
     const id = req.params.id;
@@ -62,12 +65,14 @@ export function getFuncionarioById(req: Request, res: Response) {
         });
 }
 
+// Cadastrar funcionário
 export function postFuncionario(req: Request, res: Response) {
 
     const { token, userId, params } = req.body as RequestInterface;
 
     let date = (params.dataNascimento as string).split("/").reverse();
 
+    // Primeiro verificar se já existe este funcionário para evitar duplicidade
     FuncionarioModel
         .findAll({
             where: {
@@ -111,6 +116,7 @@ export function postFuncionario(req: Request, res: Response) {
         });
 }
 
+// Atualizar funcionário
 export function putFuncionario(req: Request, res: Response) {
 
     const id = req.params.id;
@@ -142,6 +148,7 @@ export function putFuncionario(req: Request, res: Response) {
         });
 }
 
+// Deletar funcionário
 export function deleteFuncionario(req: Request, res: Response) {
 
     const id = req.params.id;

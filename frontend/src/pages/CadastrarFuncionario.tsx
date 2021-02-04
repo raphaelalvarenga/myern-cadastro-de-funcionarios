@@ -18,6 +18,7 @@ const CadastrarFuncionario = (props: Props) => {
 
     const classes = styles();
 
+    // States
     const [funcionario, setFuncionario] = React.useState<Funcionario>({
         id: null,
         nome: "",
@@ -35,13 +36,17 @@ const CadastrarFuncionario = (props: Props) => {
     const [semCargo, setSemCargo] = React.useState<{naoPossui: boolean, mostrar: boolean}>({naoPossui: true, mostrar: false});
 
     React.useEffect(() => {
+
+        // Se esta página for a de editar, buscar o registro de acordo com o id da URL
         if (acao === "editar") {
             getFuncionario();
         }
 
+        // Buscar os cargos para popular o select component
         getCargos();
     }, []);
 
+    // Buscar cargos
     const getCargos = () => {
         service
             .getCargos()
@@ -57,6 +62,7 @@ const CadastrarFuncionario = (props: Props) => {
             })
     }
 
+    // Buscar funcionário
     const getFuncionario = () => {
         const id = parseInt(props.match.params.id);
         service
@@ -73,7 +79,10 @@ const CadastrarFuncionario = (props: Props) => {
             .catch(error => console.log(error))
     }
 
+    // Adicionar registro
     const adicionarFuncionario = () => {
+
+        // Estas condicionais serão testadas para verificar se o usuário preencheu o formulário
         const condicionais = [
             funcionario.nome === "",
             funcionario.sobrenome === "",
@@ -82,9 +91,14 @@ const CadastrarFuncionario = (props: Props) => {
             funcionario.CargoId === 0
         ]
 
+        // Se o usuário não preencheu o formulário...
         if (condicionais.includes(true)) {
+
+            // ... então, orientá-lo a preencher todo o formulário
             setSnackbarProps({open: true, message: "Preencha todos os campos!"});
         } else {
+
+            // ... senão, adicionar o registro
             service
                 .postFuncionario(funcionario)
                 .then(response => {
@@ -103,10 +117,26 @@ const CadastrarFuncionario = (props: Props) => {
         }
     }
 
+    // Editar registro
     const editarFuncionario = () => {
-        if (false) {
+
+        // Estas condicionais serão testadas para verificar se o usuário preencheu o formulário
+        const condicionais = [
+            funcionario.nome === "",
+            funcionario.sobrenome === "",
+            funcionario.dataNascimento === "",
+            funcionario.salario === 0,
+            funcionario.CargoId === 0
+        ]
+
+        // Se o usuário não preencheu o formulário...
+        if (condicionais.includes(true)) {
+
+            // ... então, orientá-lo a preencher todo o formulário
             setSnackbarProps({open: true, message: "Preencha o campo!"});
         } else {
+
+            // ... senão, adicionar o registro
             service
                 .putFuncionario(funcionario)
                 .then(response => {

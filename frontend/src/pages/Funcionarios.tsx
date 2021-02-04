@@ -13,12 +13,15 @@ const service = new Service();
 const Funcionarios: React.FunctionComponent = () => {
     const classes = styles();
 
+    // States
     const [funcionarios, setFuncionarios] = React.useState<Funcionario[]>([]);
 
+    // Ao abrir a página, buscar todos os funcionários
     React.useEffect(() => {
         getFuncionarios();
     }, []);
 
+    // Este método busca todos os funcionários
     const getFuncionarios = () => {
 
         setFuncionarios([]);
@@ -32,6 +35,7 @@ const Funcionarios: React.FunctionComponent = () => {
             .catch(error => console.log(error));
     }
 
+    // Este método é disparado quando o usuário clica no botão excluir registro
     const deleteFuncionario = (id: number) => {
         service
             .deleteFuncionario(id)

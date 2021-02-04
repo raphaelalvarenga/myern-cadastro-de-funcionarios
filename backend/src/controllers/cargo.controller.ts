@@ -4,9 +4,11 @@ import { Request, Response } from "express";
 import { ResponseInterface } from "../interfaces/response.interface";
 import { RequestInterface } from "../interfaces/request.interface";
 
+// Estas variáveis servirão para retornar os dados ao front
 let status: number;
 let response: ResponseInterface;
 
+// Buscar todos os cargos
 export function getCargos(req: Request, res: Response) {
     CargoModel
         .findAll()
@@ -23,6 +25,7 @@ export function getCargos(req: Request, res: Response) {
         });
 }
 
+// Buscar cargo por id
 export function getCargosById(req: Request, res: Response) {
 
     const id = req.params.id;
@@ -43,10 +46,12 @@ export function getCargosById(req: Request, res: Response) {
 
 }
 
+// Cadastrar cargo
 export function postCargo(req: Request, res: Response) {
 
     const { token, userId, params } = req.body as RequestInterface;
 
+    // Primeiro verificar se já existe este cargo para evitar duplicidade
     CargoModel
         .findAll({
             where: {
@@ -74,6 +79,7 @@ export function postCargo(req: Request, res: Response) {
         });
 }
 
+// Atualizar cargo
 export function putCargo(req: Request, res: Response) {
 
     const id = req.params.id;
@@ -98,6 +104,7 @@ export function putCargo(req: Request, res: Response) {
     
 }
 
+// Deletar cargo
 export function deleteCargo(req: Request, res: Response) {
 
     const id = req.params.id;
