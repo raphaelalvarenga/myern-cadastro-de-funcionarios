@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Divider, Grid, List, ListItem, ListItemText, MenuItem, Paper, Select, SnackbarProps, TextField, Typography } from "@material-ui/core";
 import Titulo from "../global-components/Titulo";
 import MatchParams from "../interfaces/match-params.interface";
-import { RouteComponentProps } from "react-router-dom";
+import { Link, RouteComponentProps } from "react-router-dom";
 import styles from "../styles";
 import { Service } from "../classes/services.class";
 import Funcionario from "../interfaces/funcionario.interface";
@@ -32,6 +32,7 @@ const CadastrarFuncionario = (props: Props) => {
     const [cadastrosRecentes, setCadastrosRecentes] = React.useState<string[]>([]);
     const [acao] = React.useState(props.match.params.id ? "editar" : "cadastrar");
     const [cargos, setCargos] = React.useState<Cargo[]>([]);
+    const [semCargo, setSemCargo] = React.useState<{naoPossui: boolean, mostrar: boolean}>({naoPossui: true, mostrar: false});
 
     React.useEffect(() => {
         if (acao === "editar") {
@@ -45,7 +46,11 @@ const CadastrarFuncionario = (props: Props) => {
         service
             .getCargos()
             .then(response => {
-                const tempCargos = (response.data as ResponseInterface).params.cargos;
+                const tempCargos = (response.data as ResponseInterface).params.cargos as Cargo[];
+                console.log(tempCargos);
+
+                tempCargos.length === 0 ? setSemCargo({...semCargo, mostrar: true}) : setSemCargo({naoPossui: false, mostrar: false});
+
                 setCargos(tempCargos);
             })
             .catch(error => {
@@ -58,17 +63,28 @@ const CadastrarFuncionario = (props: Props) => {
         service
             .getFuncionarioById(id)
             .then(response => {
-                console.log(response);
-                const funcionario = (response.data as ResponseInterface).params.funcionario as Funcionario;
+                let tempFuncionario = (response.data as ResponseInterface).params.funcionario as Funcionario;
+                tempFuncionario = {
+                    ...tempFuncionario,
+                    dataNascimento: new Date(tempFuncionario.dataNascimento).toLocaleDateString()
+                }
 
-                setFuncionario(funcionario);
+                setFuncionario(tempFuncionario);
             })
             .catch(error => console.log(error))
     }
 
     const adicionarFuncionario = () => {
-        if (false) {
-            setSnackbarProps({open: true, message: "Preencha o campo!"});
+        const condicionais = [
+            funcionario.nome === "",
+            funcionario.sobrenome === "",
+            funcionario.dataNascimento === "",
+            funcionario.salario === 0,
+            funcionario.CargoId === 0
+        ]
+
+        if (condicionais.includes(true)) {
+            setSnackbarProps({open: true, message: "Preencha todos os campos!"});
         } else {
             service
                 .postFuncionario(funcionario)
@@ -113,6 +129,18 @@ const CadastrarFuncionario = (props: Props) => {
             />
             <Titulo descricao = "Cadastrar Funcionario" />
             <Paper className = {classes.paper}>
+                {
+                    semCargo.naoPossui && semCargo.mostrar &&
+                    <Grid container>
+                        <Grid item sm = {12}>
+                            <div className = {classes.alerta}>
+                                Não existem cargos cadastrados! <Link to = "/cadastrar-cargo" className = {classes.linkAlerta}>Cadastre cargos primeiros</Link> para cadastrar funcionarios!
+                            </div>
+                        </Grid>
+                    </Grid>
+                }
+                
+
                 <Grid container>
                     <Grid item sm = {12} md = {6} lg = {4}>
                         <TextField
@@ -137,7 +165,7 @@ const CadastrarFuncionario = (props: Props) => {
                         <TextField
                             required
                             label = "Data de Nascimento"
-                            value = {funcionario.dataNascimento ? new Date(funcionario.dataNascimento).toLocaleDateString() : ""}
+                            value = {funcionario.dataNascimento}
                             onChange = {(e) => setFuncionario({...funcionario, dataNascimento: e.target.value})}
                             className = {classes.inputText}
                         />
@@ -182,7 +210,7 @@ const CadastrarFuncionario = (props: Props) => {
                         <Button
                             variant = "contained"
                             color = "secondary"
-                            onClick = {() => setFuncionario({...funcionario, nome: "" })}>Limpar</Button>
+                            onClick = {() => setFuncionario({...funcionario, nome: "", sobrenome: "", dataNascimento: "", CargoId: 0, salario: 0})}>Limpar</Button>
                     </Grid>
                 </Grid>
             </Paper>

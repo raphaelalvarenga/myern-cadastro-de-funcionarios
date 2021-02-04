@@ -107,7 +107,7 @@ const Cargos = () => {
                             </TableBody>
                         </Table>
                     </TableContainer>
-                ) : <Typography variant = "h5">Não há registro de funcionarios!</Typography>
+                ) : <Typography variant = "h5">Não há registro de cargos!</Typography>
             }
                         
         </>

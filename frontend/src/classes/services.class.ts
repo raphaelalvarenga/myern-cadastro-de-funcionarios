@@ -34,7 +34,17 @@ export class Service {
     }
 
     putFuncionario(funcionario: Funcionario) {
-        return axios.put(`${util.api}/funcionarios/${funcionario.id}`, funcionario)
+        request = {
+            ...request,
+            params: {
+                nome: funcionario.nome,
+                sobrenome: funcionario.sobrenome,
+                dataNascimento: funcionario.dataNascimento,
+                salario: funcionario.salario,
+                cargoId: funcionario.CargoId
+            }
+        }
+        return axios.put(`${util.api}/funcionarios/${funcionario.id}`, request)
     }
 
     deleteFuncionario(id: number) {
