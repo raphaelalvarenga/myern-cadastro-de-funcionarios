@@ -4,6 +4,8 @@ import bodyParser from "body-parser";
 import funcionarioRouter from "../routes/funcionario.route";
 import cors from "cors";
 import { associacao } from "../models/associations";
+import { CargoModel } from "../models/cargo.model";
+import { FuncionarioModel } from "../models/funcionario.model";
 
 export class Server {
     private server: Application;
@@ -14,6 +16,8 @@ export class Server {
         this.port = parseInt(process.env.PORT as string) || 3000;
         this.settings();
         associacao();
+        CargoModel.sync();
+        FuncionarioModel.sync();
         this.rotas();
         this.listen();
     }
