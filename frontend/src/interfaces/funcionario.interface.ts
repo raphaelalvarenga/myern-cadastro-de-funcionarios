@@ -4,7 +4,7 @@ export default interface Funcionario {
     sobrenome: string;
     dataNascimento: string;
     salario: number;
-    cargoId: number;
+    CargoId: number;
     createdAt: Date | null;
     updatedAt: Date | null;
 }

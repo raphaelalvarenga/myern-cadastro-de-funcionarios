@@ -27,7 +27,7 @@ export class Service {
                 sobrenome: newFuncionario.sobrenome,
                 dataNascimento: newFuncionario.dataNascimento,
                 salario: newFuncionario.salario,
-                cargoId: newFuncionario.cargoId
+                cargoId: newFuncionario.CargoId
             }
         }
         return axios.post(`${util.api}/funcionarios`, request)

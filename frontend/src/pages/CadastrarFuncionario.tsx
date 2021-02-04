@@ -23,7 +23,7 @@ const CadastrarFuncionario = (props: Props) => {
         nome: "",
         sobrenome: "",
         dataNascimento: "",
-        cargoId: 0,
+        CargoId: 0,
         salario: 0,
         createdAt: null,
         updatedAt: null
@@ -58,7 +58,8 @@ const CadastrarFuncionario = (props: Props) => {
         service
             .getFuncionarioById(id)
             .then(response => {
-                const funcionario = (response.data as ResponseInterface).params.cargos as Funcionario;
+                console.log(response);
+                const funcionario = (response.data as ResponseInterface).params.funcionario as Funcionario;
 
                 setFuncionario(funcionario);
             })
@@ -78,7 +79,7 @@ const CadastrarFuncionario = (props: Props) => {
                     if (success) {
                         const { nome, sobrenome } = funcionario;
                         setCadastrosRecentes([...cadastrosRecentes, `${nome} ${sobrenome}`]);
-                        setFuncionario({...funcionario, nome: "", sobrenome: "", dataNascimento: "", cargoId: 0, salario: 0})
+                        setFuncionario({...funcionario, nome: "", sobrenome: "", dataNascimento: "", CargoId: 0, salario: 0})
                     }
                 })
                 .catch(error => {
@@ -136,7 +137,7 @@ const CadastrarFuncionario = (props: Props) => {
                         <TextField
                             required
                             label = "Data de Nascimento"
-                            value = {funcionario.dataNascimento}
+                            value = {funcionario.dataNascimento ? new Date(funcionario.dataNascimento).toLocaleDateString() : ""}
                             onChange = {(e) => setFuncionario({...funcionario, dataNascimento: e.target.value})}
                             className = {classes.inputText}
                         />
@@ -144,9 +145,10 @@ const CadastrarFuncionario = (props: Props) => {
 
                     <Grid item sm = {12} md = {6} lg = {4}>
                         <Select
-                            value = {funcionario.cargoId === 0 ? "" : funcionario.cargoId}
-                            onChange = {(e) => setFuncionario({...funcionario, cargoId: parseInt(e.target.value as string)})}
+                            value = {funcionario.CargoId === 0 ? "" : funcionario.CargoId}
+                            onChange = {(e) => setFuncionario({...funcionario, CargoId: parseInt(e.target.value as string)})}
                             className = {classes.inputText}
+                            label = "Cargo"
                         >
                             {
                                 cargos.map((cargo, index) => <MenuItem key = {index} value = {cargo.id}>{cargo.descricao}</MenuItem>)
