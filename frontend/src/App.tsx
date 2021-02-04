@@ -41,9 +41,9 @@ const App = () => {
                         <Cargos />
                     </Route>
 
-                    <Route path = "/cadastrar-cargo">
-                        <CadastrarCargo />
-                    </Route>
+                    <Route path = "/cadastrar-cargo" component = {CadastrarCargo} />
+
+                    <Route path = "/cargo/:id" component = {CadastrarCargo} />
 
                     <Route path = "/">
                         <Funcionarios />

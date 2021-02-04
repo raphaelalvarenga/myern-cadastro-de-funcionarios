@@ -5,20 +5,48 @@ import Feedback from "../global-components/Feedback";
 import { ResponseInterface } from "../interfaces/response.interface";
 import styles from "../styles";
 import Titulo from "../global-components/Titulo";
+import { RouteComponentProps } from "react-router-dom";
+import Cargo from "../interfaces/cargo.interface";
+
+interface MatchParams {
+    id: string;
+}
+
+interface Props extends RouteComponentProps<MatchParams> {}
 
 const service = new Service();
 
-const CadastrarCargo = () => {
+const CadastrarCargo = (props: Props) => {
 
     const classes = styles();
     
-    const [cargo, setCargo] = React.useState<string>("");
+    const [cargo, setCargo] = React.useState<Cargo>({id: null, descricao: "", createdAt: null, updatedAt: null});
     const [cadastrosRecentes, setCadastrosRecentes] = React.useState<string[]>([]);
-    const [snackbarProps, setSnackbarProps] = React.useState<SnackbarProps>({open: false, message: ""})
+    const [snackbarProps, setSnackbarProps] = React.useState<SnackbarProps>({open: false, message: ""});
+    const [acao] = React.useState(props.match.params.id ? "editar" : "cadastrar");
+
+    React.useEffect(() => {
+        if (acao === "editar") {
+            getCargo();
+        }
+    }, []);
+    
+    const getCargo = () => {
+        const id = parseInt(props.match.params.id);
+        service
+            .getCargoById(id)
+            .then(response => {
+                const cargo = (response.data as ResponseInterface).params.cargos as Cargo;
+
+                setCargo(cargo);
+            })
+            .catch(error => console.log(error))
+
+    }
 
     const adicionarCargo = () => {
-        if (cargo === "") {
-
+        if (cargo.descricao === "") {
+            setSnackbarProps({open: true, message: "Preencha o campo!"});
         } else {
             service
                 .postCargo(cargo)
@@ -27,8 +55,9 @@ const CadastrarCargo = () => {
                     setSnackbarProps({open: true, message})
 
                     if (success) {
-                        setCadastrosRecentes([...cadastrosRecentes, cargo]);
-                        setCargo("");
+                        const { id, createdAt, updatedAt } = cargo;
+                        setCadastrosRecentes([...cadastrosRecentes, cargo.descricao]);
+                        setCargo({...cargo, descricao: ""});
                     }
                 })
                 .catch(error => {
@@ -36,6 +65,24 @@ const CadastrarCargo = () => {
                 });
         }
     }
+
+    const editarCargo = () => {
+        if (cargo.descricao === "") {
+            setSnackbarProps({open: true, message: "Preencha o campo!"});
+        } else {
+            service
+                .putCargo(cargo)
+                .then(response => {
+                    const { success, message } = (response.data as ResponseInterface);
+                    setSnackbarProps({open: true, message})
+                })
+                .catch(error => {
+                    setSnackbarProps({open: true, message: "Ocorreu um erro. Tente novamente..."});
+                });
+        }
+    }
+
+
     
     return (
         <>
@@ -51,8 +98,8 @@ const CadastrarCargo = () => {
                         <TextField
                             required
                             label = "Descrição"
-                            value = {cargo}
-                            onChange = {(e) => setCargo(e.target.value)}
+                            value = {cargo.descricao}
+                            onChange = {(e) => setCargo({...cargo, descricao: e.target.value})}
                             className = {classes.inputText}
                         />
                     </Grid>
@@ -63,13 +110,16 @@ const CadastrarCargo = () => {
                         <Button
                             variant = "contained"
                             color = "primary"
-                            onClick = {adicionarCargo}
+                            onClick = {acao === "editar" ? editarCargo : adicionarCargo}
                             style = {{ marginRight: "10px" }}
-                        >Salvar</Button>
+                        >{acao === "editar" ? "Editar" : "Salvar"}</Button>
                     </Grid>
 
                     <Grid item>
-                        <Button variant = "contained" color = "secondary" onClick = {() => setCargo("")}>Limpar</Button>
+                        <Button
+                            variant = "contained"
+                            color = "secondary"
+                            onClick = {() => setCargo({...cargo, descricao:""})}>Limpar</Button>
                     </Grid>
                 </Grid>
             </Paper>

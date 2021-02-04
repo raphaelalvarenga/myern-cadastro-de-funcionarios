@@ -1,7 +1,6 @@
 import React from "react";
 import { Button, Grid, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@material-ui/core";
-import { makeStyles } from "@material-ui/styles";
-import { Funcionario } from "../classes/funcionario.class";
+import Funcionario from "../interfaces/funcionario.interface";
 import { ResponseInterface } from "../interfaces/response.interface";
 import { Add, Refresh } from "@material-ui/icons";
 import { Service } from "../classes/services.class";

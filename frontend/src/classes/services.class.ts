@@ -1,8 +1,8 @@
 import axios from "axios";
 import { RequestInterface } from "../interfaces/request.interface";
 import util from "../util/util";
-import { Cargo } from "./cargo.class";
-import { Funcionario } from "./funcionario.class";
+import Cargo from "../interfaces/cargo.interface";
+import Funcionario from "../interfaces/funcionario.interface";
 
 let request: RequestInterface = {
     token: "um-token-qualquer",
@@ -29,17 +29,27 @@ export class Service {
         return axios.get(`${util.api}/cargos`);
     }
 
-    getCargoById(id: number) { }
+    getCargoById(id: number) {
+        return axios.get(`${util.api}/cargos/${id}`)
+    }
 
-    postCargo(descricao: string) {
+    postCargo(cargo: Cargo) {
         request = {
             ...request,
-            params: {descricao}
+            params: {descricao: cargo.descricao}
         }
         return axios.post(`${util.api}/cargos`, request);
     }
 
-    putCargo(cargo: Cargo) { }
+    putCargo(cargo: Cargo) {
+        request = {
+            ...request,
+            params: {
+                descricao: cargo.descricao
+            }
+        }
+        return axios.put(`${util.api}/cargos/${cargo.id}`, request)
+    }
 
     deleteCargo(id: number) {
         return axios.delete(`${util.api}/cargos/${id}`);

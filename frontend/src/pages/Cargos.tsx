@@ -2,7 +2,7 @@ import { Button, Grid, IconButton, Table, TableBody, TableCell, TableContainer, 
 import { Add, Refresh } from "@material-ui/icons";
 import React from "react";
 import { Link } from "react-router-dom";
-import { Cargo } from "../classes/cargo.class";
+import Cargo from "../interfaces/cargo.interface";
 import { Service } from "../classes/services.class";
 import Titulo from "../global-components/Titulo";
 import { ResponseInterface } from "../interfaces/response.interface";
