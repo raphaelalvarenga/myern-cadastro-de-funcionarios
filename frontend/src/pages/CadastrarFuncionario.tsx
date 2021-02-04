@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Divider, Grid, List, ListItem, ListItemText, MenuItem, Paper, Select, SnackbarProps, TextField, Typography } from "@material-ui/core";
+import { Button, Divider, FormControl, Grid, InputLabel, List, ListItem, ListItemText, MenuItem, Paper, Select, SnackbarProps, TextField, Typography } from "@material-ui/core";
 import Titulo from "../global-components/Titulo";
 import MatchParams from "../interfaces/match-params.interface";
 import { Link, RouteComponentProps } from "react-router-dom";
@@ -171,16 +171,19 @@ const CadastrarFuncionario = (props: Props) => {
                     </Grid>
 
                     <Grid item sm = {12} md = {6} lg = {4}>
-                        <Select
-                            value = {funcionario.CargoId === 0 ? "" : funcionario.CargoId}
-                            onChange = {(e) => setFuncionario({...funcionario, CargoId: parseInt(e.target.value as string)})}
-                            className = {classes.inputText}
-                            label = "Cargo"
-                        >
-                            {
-                                cargos.map((cargo, index) => <MenuItem key = {index} value = {cargo.id}>{cargo.descricao}</MenuItem>)
-                            }
-                        </Select>
+                        <FormControl required>
+                            <InputLabel id = "label-cargo">Cargo</InputLabel>
+                            <Select
+                                value = {funcionario.CargoId === 0 ? "" : funcionario.CargoId}
+                                onChange = {(e) => setFuncionario({...funcionario, CargoId: parseInt(e.target.value as string)})}
+                                className = {classes.inputText}
+                                labelId = "label-cargo"
+                            >
+                                    {
+                                        cargos.map((cargo, index) => <MenuItem key = {index} value = {cargo.id}>{cargo.descricao}</MenuItem>)
+                                    }
+                            </Select>
+                        </FormControl>
                     </Grid>
 
                     <Grid item sm = {12} md = {6} lg = {4}>
