@@ -7,6 +7,7 @@ import { Add, Refresh } from "@material-ui/icons";
 import { Service } from "../classes/services.class";
 import { Link } from "react-router-dom";
 import styles from "../styles";
+import Titulo from "../global-components/Titulo";
 
 const service = new Service();
 
@@ -44,6 +45,7 @@ const Funcionarios: React.FunctionComponent = () => {
 
     return (
         <>
+            <Titulo descricao = "Funcionários" />
             <Grid container justify = "space-between">
                 <Grid item>
                     <Link to = "/cadastrar-funcionario" className = {classes.buttonLink}>

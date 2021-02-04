@@ -4,6 +4,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Cargo } from "../classes/cargo.class";
 import { Service } from "../classes/services.class";
+import Titulo from "../global-components/Titulo";
 import { ResponseInterface } from "../interfaces/response.interface";
 import styles from "../styles";
 
@@ -42,6 +43,7 @@ const Cargos = () => {
 
     return (
         <>
+            <Titulo descricao = "Cargos" />
             <Grid container justify = "space-between">
                 <Grid item>
                     <Link to = "/cadastrar-cargo" className = {classes.buttonLink}>

@@ -6,14 +6,12 @@ import Cargos from "./pages/Cargos";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Funcionario from "./pages/Funcionario";
 import CadastrarFuncionario from "./pages/CadastrarFuncionario";
-
-const styles = {
-    conteudo: {
-        marginTop: "100px"
-    }
-}
+import CadastrarCargo from "./pages/CadastrarCargo";
+import styles from "./styles";
 
 const App = () => {
+
+    const classes = styles();
 
     const [ isSidebarOpen, setIsSidebarOpen ] = React.useState(false);
 
@@ -29,7 +27,7 @@ const App = () => {
         <BrowserRouter>
             <MenuSuperior openSidebar = {openSidebar} />
             <MenuLateral isSidebarOpen = {isSidebarOpen} closeSidebar = {closeSidebar} />
-            <div style = {styles.conteudo}>
+            <div className = {classes.conteudo}>
                 <Switch>
                     <Route path = "/funcionario/:id">
                         <Funcionario />
@@ -41,6 +39,10 @@ const App = () => {
 
                     <Route path = "/cargos">
                         <Cargos />
+                    </Route>
+
+                    <Route path = "/cadastrar-cargo">
+                        <CadastrarCargo />
                     </Route>
 
                     <Route path = "/">

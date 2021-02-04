@@ -1,13 +1,19 @@
 import React from "react";
-import { Grid } from "@material-ui/core";
+import { Grid, Paper, Typography } from "@material-ui/core";
+import Titulo from "../global-components/Titulo";
 
 const CadastrarFuncionario = () => {
     return (
-        <Grid container>
-            <Grid item xs = {12}>
-                CadastrarFuncionario
-            </Grid>
-        </Grid>
+        <>
+            <Titulo descricao = "Cadastrar Funcionario" />
+            <Paper>
+                <Grid container>
+                    <Grid item xs = {12}>
+                        <Typography variant = "h5">Cadastrar Funcionário</Typography>
+                    </Grid>
+                </Grid>
+            </Paper>
+        </>
     )
 }
 

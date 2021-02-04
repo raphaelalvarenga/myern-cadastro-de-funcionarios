@@ -1,7 +1,14 @@
 import axios from "axios";
+import { RequestInterface } from "../interfaces/request.interface";
 import util from "../util/util";
 import { Cargo } from "./cargo.class";
 import { Funcionario } from "./funcionario.class";
+
+let request: RequestInterface = {
+    token: "um-token-qualquer",
+    userId: 1,
+    params: { }
+}
 
 export class Service {
     getFuncionarios() {
@@ -24,7 +31,13 @@ export class Service {
 
     getCargoById(id: number) { }
 
-    postCargo(newCargo: Cargo) { }
+    postCargo(descricao: string) {
+        request = {
+            ...request,
+            params: {descricao}
+        }
+        return axios.post(`${util.api}/cargos`, request);
+    }
 
     putCargo(cargo: Cargo) { }
 
