@@ -4,13 +4,12 @@ import { RequestInterface } from "../interfaces/request.interface";
 import { FuncionarioModel } from "../models/funcionario.model";
 import { Funcionario } from "../classes/funcionario.class";
 import { sequelize } from "../util/connection";
+import { Op } from "sequelize";
 
 let status: number;
 let response: ResponseInterface;
 
 export function getFuncionarios(req: Request, res: Response) {
-    // FuncionarioModel
-    //     .findAll()
 
     const sql = `
         SELECT
@@ -70,20 +69,42 @@ export function postFuncionario(req: Request, res: Response) {
     let date = (params.dataNascimento as string).split("/").reverse();
 
     FuncionarioModel
-        .create({
-            nome: params.nome,
-            sobrenome: params.sobrenome,
-            dataNascimento: date,
-            salario: params.salario,
-            CargoId: params.cargoId
+        .findAll({
+            where: {
+                [Op.and]: [
+                    { nome: params.nome },
+                    { sobrenome: params.sobrenome }
+                ]
+            }
+        })
+        .then(result => {
+            if (result.length > 0) {
+                throw "Este funcionário já está cadastrado!";
+            }
+            
+            return result;
+        })
+        .then(result => {
+            return FuncionarioModel
+                        .create({
+                            nome: params.nome,
+                            sobrenome: params.sobrenome,
+                            dataNascimento: date,
+                            salario: params.salario,
+                            CargoId: params.cargoId
+                        });
         })
         .then(result => {
             status = 201;
             response = { success: true, message: "Cadastro realizado com sucesso", params: { funcionario: result }}
         })
         .catch(error => {
-            status = 500;
-            response = { success: false, message: error, params: {} }
+            status = 201;
+            response = {
+                success: false,
+                message: error,
+                params: {}
+            }
         })
         .finally(() => {
             res.status(status).json(response);

@@ -48,13 +48,25 @@ export function postCargo(req: Request, res: Response) {
     const { token, userId, params } = req.body as RequestInterface;
 
     CargoModel
-        .create({ descricao: params.descricao })
+        .findAll({
+            where: {
+                descricao: params.descricao
+            }
+        })
+        .then(result => {
+            if (result.length > 0) {
+                throw "Este cargo já está cadastrado";
+            }
+
+            return CargoModel
+                .create({ descricao: params.descricao })
+        })
         .then(result => {
             status = 201;
             response = { success: true, message: "Cadastro realizado com sucesso!", params: result }
         })
         .catch(error => {
-            status = 500;
+            status = 201;
             response = { success: false, message: error, params: {} }
         })
         .finally(() => {
