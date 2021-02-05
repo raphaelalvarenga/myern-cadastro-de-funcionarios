@@ -6,6 +6,7 @@ import cors from "cors";
 import { associacao } from "../models/associations";
 import { CargoModel } from "../models/cargo.model";
 import { FuncionarioModel } from "../models/funcionario.model";
+import path from "path";
 
 export class Server {
     private server: Application;
@@ -23,6 +24,7 @@ export class Server {
     }
 
     settings() {
+        this.server.use(express.static(path.join(__dirname, "..", "public")))
         this.server.use(bodyParser.json());
         this.server.use(cors());
     }

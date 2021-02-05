@@ -33,7 +33,6 @@ export function getFuncionarios(req: Request, res: Response) {
         .query(sql)
         .then(result => {
             status = 200;
-            console.log("teste")
             response = { success: true, message: "", params: { funcionarios: result[0] }}
         })
         .catch(error => {
