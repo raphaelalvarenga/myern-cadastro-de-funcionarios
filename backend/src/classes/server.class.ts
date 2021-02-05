@@ -24,7 +24,7 @@ export class Server {
     }
 
     settings() {
-        this.server.use(express.static(path.join(__dirname, "..", "public")))
+        this.server.use(express.static(path.join(__dirname, "..", "..", "public")))
         this.server.use(bodyParser.json());
         this.server.use(cors());
     }
